@@ -38,6 +38,7 @@ namespace FirstGUI
             InitializeComponent();
             setAllComponentsUnvisible();
             loadDefaultPicture();
+            this.Text = "Eco project using WebService connection";
         }
 
         //Url for connection
@@ -66,7 +67,7 @@ namespace FirstGUI
             return password;
         }
 
-        private void setUsername(string usr)//Delete****************************
+        private void setUsername(string usr)
         {
             username = usr;
         }
@@ -844,10 +845,9 @@ namespace FirstGUI
                 if (String.IsNullOrEmpty(textBox9.Text))
                     errorMessageBox("Please select a customer!");
                 else
-                    //*****************************************************************************************************//
                     changeVisibility();
-                fillProductDropDown(getProducts());// NOT IMPLEMENTED IN THE OTHER PROGRAMS 
-                                                   //***************************************************************************************************//
+                fillProductDropDown(getProducts());
+                                                   
 
             }
             else if (getStatecontroll() == 3 && getaddControl() == 0)//Product
@@ -1065,7 +1065,7 @@ namespace FirstGUI
                                 {
                                     errorMessageBox("Can't create new user!");
                                 }
-                            }//usin finish
+                            }//using finish
                         }//check passwords finish
                         else
                         {
@@ -1377,8 +1377,6 @@ namespace FirstGUI
         //ID DropBox 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //loadDefaultPicture();
-            //string bougth = "";
             string action = "";
             if (getStatecontroll() == 1)//supplier
             {
@@ -1456,13 +1454,15 @@ namespace FirstGUI
             {
                    
                     string name = comboBox1.Text;
+                    string id = getNameFromDrop(name);
+                Console.WriteLine("Id for image " + id);
                     string imgLoc = "";
                     using (WebClient client2 = new WebClient())
                 {
                     NameValueCollection postData2 = new NameValueCollection()
                {
                    { "username", username }, //order: {"parameter name", "parameter value"}
-                   { "getProductsImageLocation", name },
+                   { "getProductsImageLocation", id },
 
 
                };
@@ -1935,7 +1935,7 @@ namespace FirstGUI
 
                 fillProductDropDown(pr);
             }
-            else if(getStatecontroll() == 2)
+           if(getStatecontroll() == 2)
             {
                 using (WebClient client2 = new WebClient())
                 {
@@ -2135,6 +2135,7 @@ namespace FirstGUI
         //Load image to product from server
         public void getPictureFromServer(String imgLocation)
         {
+            Console.WriteLine(imgLocation);
             if (string.IsNullOrEmpty(imgLocation))
             {
                 imgLocation = "picture_library/NO_IMAGE.jpg";
